@@ -1,0 +1,23 @@
+{
+    "name": "safeLink",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "Extension that checks, if link is trustworthy or not",
+    "action": {
+        "default_icon": {
+            "16": "icon.png",
+            "24": "icon.png",
+            "32": "icon.png"
+        },
+        "default_title": "safeLink",
+        "default_popup": "index.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "js": ["app.js"]
+        }
+    ]
+}
