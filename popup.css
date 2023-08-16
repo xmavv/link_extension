@@ -1,0 +1,38 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 350px;
+    height: 140px;
+    background-color: white;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1rem;
+}
+
+.asfe .unsafe {
+    text-decoration: none;
+}
+
+.safe {
+    color: green;
+}
+
+.unsafe {
+    color: red;
+}
+
+input {
+    width: 25px;
+    height: 25px;
+    margin: 0 20px;
+    background-color: white;
+    border: 1px solid white padding-box;
+    border-radius: 5px;
+}

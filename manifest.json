@@ -3,6 +3,7 @@
     "version": "1.0",
     "manifest_version": 3,
     "description": "Extension that checks, if link is trustworthy or not",
+    "permissions": ["storage", "tabs", "http://*/*"],
     "action": {
         "default_icon": {
             "16": "icon.png",
@@ -10,13 +11,14 @@
             "32": "icon.png"
         },
         "default_title": "safeLink",
-        "default_popup": "index.html"
+        "default_popup": "popup.html"
     },
     "background": {
         "service_worker": "background.js"
     },
     "content_scripts": [
         {
+            "matches": ["http://www.google.com/*"],
             "js": ["app.js"]
         }
     ]
