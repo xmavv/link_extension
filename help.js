@@ -1,49 +1,51 @@
-// const isSafe = (e) => {
-//     if (e.substring(0, 24) == "https://www.youtube.com/") {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// };
-
-// if (isSafe(link_href)) {
-//     link.style.color = "green";
-// } else {
-//     link.style.color = "red";
-// }
+// const link = document.querySelectorAll('a');
 
 // const apiKey = 'AIzaSyC4_ToUySpg0UxJ0gzkNm6pFpHKBjAz2OE';
-// console.log(link_href);
-// const urlToCheck = link_href;
+// const urlToCheck = "https://www.trojan.com";
 
 // const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
 
-// const requestData = {
-//   client: {
-//     clientId: 'ID',
-//     clientVersion: '1.0.0'
-//   },
-//   threatInfo: {
-//     threatTypes: ['MALWARE', 'SOCIAL_ENGINEERING', 'UNWANTED_SOFTWARE'],
-//     platformTypes: ['ANY_PLATFORM'],
-//     threatEntryTypes: ['URL'],
-//     threatEntries: [{ url: urlToCheck }]
-//   }
-// };
+// link.forEach(e => {
+//     let link_href = e.getAttribute('href')
 
-// fetch(apiUrl, {
-//   method: 'POST',
-//   body: JSON.stringify(requestData)
-// })
-//   .then(response => response.json())
-//   .then(data => {
-//     console.log('Odpowiedź z API Safe Browsing:', data);
-//     if (data.matches && data.matches.length > 0) {
-//         console.log('siema');
-//     } else {
-//         console.log('elo');
+// const requestData =   {
+//     client: {
+//       clientId:      "yourcompanyname",
+//       clientVersion: "1.5.2"
+//     },
+//     threatInfo: {
+//       threatTypes:      ["MALWARE", "SOCIAL_ENGINEERING"],
+//       platformTypes:    ["WINDOWS"],
+//       threatEntryTypes: ["URL"],
+//       threatEntries: [
+//         {url: `${link_href}`}
+//       ]
 //     }
+//   }
+
+//   fetch(apiUrl, {
+//     method: 'POST',
+//     body: JSON.stringify(requestData)
 //   })
-//   .catch(error => {
-//     console.error('Wystąpił błąd:', error);
-//   });
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log(data);
+//       if (data.matches && data.matches.length > 0) {
+//           console.log('Strona zawiera potencjalne zagrożenia:');
+//           e.style.color = "black"
+        
+//           for (const match of data.matches) {
+//             console.log('Typ zagrożenia:', match.threatType);
+//             console.log('Platforma zagrożenia:', match.platformType);
+//             console.log('Źródło zagrożenia:', match.threatEntryType);
+//             console.log('Zagrożony URL:', match.threat.url);
+//           }
+        
+//         } else {
+//           console.log('Strona jest bezpieczna.');
+//         }
+//     })
+//     .catch(error => {
+//       console.error('Wystąpił błąd:', error);
+//     })
+// })

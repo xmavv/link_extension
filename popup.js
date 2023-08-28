@@ -1,5 +1,5 @@
-const safeColorPicker = document.getElementById("safe");
-const unSafeColorPicker = document.getElementById("unsafe");
+const safeColorPicker = document.getElementById("input_safe");
+const unSafeColorPicker = document.getElementById("input_unsafe");
 const safeLink = document.querySelector(".safe");
 const unSafeLink = document.querySelector(".unsafe");
 
