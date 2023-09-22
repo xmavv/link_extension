@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>safeLink</title>
     <link rel="stylesheet" href="popup.css">
-    <script src="popup.js" defer></script>
+    <script type="module" src="popup.js" defer></script>
 </head>
 <body>
     <main>
-        <p>Pick a color for <a href="#" class="safe">safeLink</a><input type="color" value="#24b34a" id="input_safe"></p>
-        <p>Pick a color for <a href="#" class="unsafe">NOTsafeLink</a><input type="color" value="#cf0213" id="input_unsafe"></p>
+        <div>
+            <p>Pick a color for <a href="#" class="unsafe">NOTsafeLink</a><input type="color" value="#cf0213" id="input_unsafe"></p>
+        </div>
     </main>
 </body>
 </html>

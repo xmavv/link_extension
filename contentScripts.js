@@ -1,3 +1,5 @@
+// import setColor from './popup.js'
+
 const link = document.querySelectorAll('a');
 const apiKey = 'AIzaSyC4_ToUySpg0UxJ0gzkNm6pFpHKBjAz2OE';
 const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
@@ -24,19 +26,23 @@ const requestData =   {
     method: 'POST',
     body: JSON.stringify(requestData)
   })
-    .then(response => response.json())
+    .then(response => response.json()) // .json() a nie JSON.parse(), bo .json() wykorzystwyany jest z fetch
     .then(data => {
       console.log(data);
-      if (data.matches && data.matches.length > 0) {
-          e.style.color = "red"
-        } else {
-          e.style.color = "green"
-        }
+      if (data.matches && data.matches.length > 0) e.style.color = "red"
     })
     .catch(error => {
       console.error('Wystąpił błąd:', error);
     })
 })
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if(request.greeting === "hello")
+    sendResponse({farewell: "goodbye"})
+  }
+)
+
 
 // for now it only check links that are staticly added by developer throught html
 
