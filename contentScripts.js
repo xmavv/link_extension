@@ -9,55 +9,45 @@ chrome.runtime.onMessage.addListener(
 );
 
 
+// function api () {
+//   link.forEach(e => {
+//     let link_href = e.getAttribute('href')
 
+//     const requestData = {
+//       client: {
+//         clientId:      "ID",
+//         clientVersion: "1.0.0"
+//       },
+//       threatInfo: {
+//         threatTypes:      ["MALWARE", "SOCIAL_ENGINEERING"],
+//         platformTypes:    ["WINDOWS"],
+//         threatEntryTypes: ["URL"],
+//         threatEntries: [
+//           {url: `${link_href}`}
+//         ]
+//       }
+//     }
 
-// const witam = (request, sender, sendResponse) => {
-//   if( request.message === "start" ) {
-//       console.log(request.message)
-//       console.log(request.fun)
-//       return request.fun
-//   }
+//     fetch(apiUrl, {
+//       method: 'POST',
+//       body: JSON.stringify(requestData)
+//     })
+//       .then(response => response.json()) // .json() a nie JSON.parse(), bo .json() wykorzystwyany jest z fetch
+//       .then(data => {
+//         chrome.runtime.onMessage.addListener(
+//           function(request, sender, sendResponse) {
+//                   console.log(request.message);
+//                   if (data.matches && data.matches.length > 0) e.style.color = request.message;
+//                 }
+//           );
+//       })
+//       .catch(error => {
+//         console.error('Wystąpił błąd:', error);
+//       })
+//   })
 // }
 
-function api (color) {
-  link.forEach(e => {
-    let link_href = e.getAttribute('href')
-
-    const requestData = {
-      client: {
-        clientId:      "ID",
-        clientVersion: "1.0.0"
-      },
-      threatInfo: {
-        threatTypes:      ["MALWARE", "SOCIAL_ENGINEERING"],
-        platformTypes:    ["WINDOWS"],
-        threatEntryTypes: ["URL"],
-        threatEntries: [
-          {url: `${link_href}`}
-        ]
-      }
-    }
-
-    fetch(apiUrl, {
-      method: 'POST',
-      body: JSON.stringify(requestData)
-    })
-      .then(response => response.json()) // .json() a nie JSON.parse(), bo .json() wykorzystwyany jest z fetch
-      .then(data => {
-        chrome.runtime.onMessage.addListener(
-          function(request, sender, sendResponse) {
-                  console.log(request.message);
-                  if (data.matches && data.matches.length > 0) e.style.color = request.message;
-                }
-          );
-      })
-      .catch(error => {
-        console.error('Wystąpił błąd:', error);
-      })
-  })
-}
-
-api();
+// api();
 
 
 async function conncet () {
