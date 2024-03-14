@@ -1,13 +1,11 @@
+// CONTENT SCRIPTS TO JEST TAKI PLIK KTORY ZOSTANIE ZALADOWANY WRAZ ZE STARTEM STRONY
+
 const link = document.querySelectorAll("a");
 
 //tutaj moge brac tylko atrybut href bedzie to o wiele lepsze
 
 const apiKey = "AIzaSyC4_ToUySpg0UxJ0gzkNm6pFpHKBjAz2OE";
 const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(request.message);
-});
 
 function api() {
   link.forEach((e) => {
@@ -32,39 +30,32 @@ function api() {
     })
       .then((response) => response.json()) // .json() a nie JSON.parse(), bo .json() wykorzystwyany jest z fetch
       .then((data) => {
+        if (data.matches && data.matches.length > 0) {
+          e.style.color = "red";
+        } else {
+          e.style.color = "green";
+        }
+
         chrome.runtime.onMessage.addListener(function (
           request,
           sender,
           sendResponse
         ) {
-          console.log(request.message);
           if (data.matches && data.matches.length > 0)
             e.style.color = request.message;
         });
       })
       .catch((error) => {
-        console.error("Wystąpił błąd:", error);
+        console.error("Error occured:", error);
       });
   });
 }
 
 api();
 
-// async function conncet() {
-//   const getColor = await getColor();
-//   await api(getColor);
-//   console.log(getColor);
-// }
-
-// conncet();
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log("dziala1");
-  if (request.greeting === "hello") {
-    alert("siema");
-    console.log("dziala2");
-  }
-});
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//   console.log("dziala1");
+// });
 
 // for now it only check links that are staticly added by developer throught html
 
