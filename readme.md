@@ -30,10 +30,10 @@ Main subject was to develop my first chrome extension, which would be able to ca
 
 
 
-##### ! ! ! ! !
-##### DO NOT CLICK THESE LINKS
+### ! ! ! ! !
+### DO NOT CLICK THESE LINKS
 
 https://testsafebrowsing.appspot.com/s/malware.html
   
-##### ONLY FOR TESTING PURPOSES
-##### ! ! ! ! !
+### ONLY FOR TESTING PURPOSES
+### ! ! ! ! !
