@@ -1,41 +1,50 @@
 :root {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 main {
-    color: white;
-    font-size: 1.8rem;
-    width: 250px;
-    height: 100px;
-    background-color: white;
-    padding: 2rem 0;
-    text-align: center;
-    position: relative;
-    background-color: #333;
+  color: white;
+  font-size: 1.8rem;
+  width: 250px;
+  height: 100px;
+  background-color: white;
+  padding: 2rem 0;
+  text-align: center;
+  position: relative;
+  background-color: #333;
 }
 
 main div {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .unsafe {
-    color: red;
+  color: red;
+}
+.safe {
+  color: green;
 }
 
 input {
-    width: 25px;
-    height: 25px;
-    margin: 0 20px;
-    background-color: black;
-    border: 1px solid white padding-box;
-    border-radius: 5px;
+  width: 25px;
+  height: 25px;
+  margin: 0 20px;
+  background-color: black;
+  border: 1px solid white padding-box;
+  border-radius: 5px;
 }

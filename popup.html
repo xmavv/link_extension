@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>safeLink</title>
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="popup.css" />
     <script type="module" src="popup.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <main>
-        <div>
-            <p>Pick a color for <a href="#" class="unsafe">NOTsafeLink</a><input type="color" value="#cf0213" id="input_unsafe"></p>
-        </div>
+      <div>
+        <p>
+          Pick a color for <a href="#" class="unsafe">NOTsafeLink</a>
+          <input type="color" value="#ff0000" id="input_unsafe" />
+        </p>
+        <p>
+          Pick a color for <a href="#" class="safe">safeLink</a>
+          <input type="color" value="#00ff00" id="input_safe" />
+        </p>
+      </div>
     </main>
-</body>
+  </body>
 </html>
