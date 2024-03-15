@@ -1,2 +1,0 @@
-zmienic href na szukanie
-debounce
