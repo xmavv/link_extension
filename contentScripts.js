@@ -5,12 +5,12 @@
 const apiKey = "AIzaSyC4_ToUySpg0UxJ0gzkNm6pFpHKBjAz2OE";
 const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
 
-function api() {
-  const link = document.querySelectorAll("a");
-  link.forEach((e) => {
-    let link_href = e.getAttribute("href");
+function validateLinks() {
+  const links = document.querySelectorAll("a");
+  links.forEach((e) => {
+    let linkHref = e.getAttribute("href");
 
-    if (link_href === "#") {
+    if (linkHref === "#") {
       e.style.color = "green";
       return;
     }
@@ -24,7 +24,7 @@ function api() {
         threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
         platformTypes: ["WINDOWS"],
         threatEntryTypes: ["URL"],
-        threatEntries: [{ url: `${link_href}` }],
+        threatEntries: [{ url: `${linkHref}` }],
       },
     };
 
@@ -55,17 +55,14 @@ function api() {
   });
 }
 
-api();
+validateLinks();
 
 //every DOM update handling
 
 function handleDOMMutations(mutationsList, observer) {
   for (let mutation of mutationsList) {
     if (mutation.type === "childList" || mutation.type === "attributes") {
-      // Tutaj wykonaj odpowiednie akcje w zależności od wykrytej zmiany
-      console.log("Zmieniono zawartość strony");
-      console.log(observer);
-      api();
+      validateLinks();
     }
   }
 }
