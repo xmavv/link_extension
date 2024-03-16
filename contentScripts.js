@@ -79,19 +79,3 @@ observer.observe(document.body, config);
 // gdy cokolwiek sie zmieni i do tej funkcji automatycznie idzie mutationList ktore zwraca ten MutationObserver
 
 // returnuje ten observer ta mutationList i automatycznie przekazuje ja do callback funkcji
-
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//   console.log("dziala1");
-// });
-
-// for now it only check links that are staticly added by developer throught html
-
-// This is a pretty basic expression for testing domain names:
-// @^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$@i
-
-// Should match:
-
-// domain.com
-// www.domain.com
-// http://domain.com
-// https://domain.com
