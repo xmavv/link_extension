@@ -10,6 +10,11 @@ function api() {
   link.forEach((e) => {
     let link_href = e.getAttribute("href");
 
+    if (link_href === "#") {
+      e.style.color = "green";
+      return;
+    }
+
     const requestData = {
       client: {
         clientId: "ID",
