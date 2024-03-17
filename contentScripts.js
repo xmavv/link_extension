@@ -1,17 +1,15 @@
-// CONTENT SCRIPTS TO JEST TAKI PLIK KTORY ZOSTANIE ZALADOWANY WRAZ ZE STARTEM STRONY
-
-//tutaj moge brac tylko atrybut href bedzie to o wiele lepsze
-
 const apiKey = "AIzaSyC4_ToUySpg0UxJ0gzkNm6pFpHKBjAz2OE";
 const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
+let colorSafe;
+let colorUnSafe;
 
-function validateLinks() {
+function validateLinks(colorSafe = "green", colorUnSafe = "red") {
   const links = document.querySelectorAll("a");
   links.forEach((e) => {
     let linkHref = e.getAttribute("href");
 
     if (linkHref === "#") {
-      e.style.color = "green";
+      e.style.color = colorSafe;
       return;
     }
 
@@ -24,7 +22,7 @@ function validateLinks() {
         threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
         platformTypes: ["WINDOWS"],
         threatEntryTypes: ["URL"],
-        threatEntries: [{ url: `${linkHref}` }],
+        threatEntries: [{ url: linkHref }],
       },
     };
 
@@ -35,40 +33,38 @@ function validateLinks() {
       .then((response) => response.json())
       .then((data) => {
         if (data.matches && data.matches.length > 0) {
-          e.style.color = "red";
+          e.style.color = colorUnSafe;
         } else {
-          e.style.color = "green";
+          e.style.color = colorSafe;
         }
-
-        chrome.runtime.onMessage.addListener(function (
-          request,
-          sender,
-          sendResponse
-        ) {
-          if (data.matches && data.matches.length > 0)
-            e.style.color = request.message;
-        });
       })
       .catch((error) => {
         console.error("Error occured:", error);
       });
   });
 }
-
 validateLinks();
 
-//every DOM update handling
+//wait for message from popup.js about color
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  request.input === "input_unsafe"
+    ? (colorUnSafe = request.message)
+    : (colorSafe = request.message);
+});
 
-function handleDOMMutations(mutationsList, observer) {
-  for (let mutation of mutationsList) {
+//every DOM update handling
+function handleDOMMutations(mutationsListCallBack, observer) {
+  for (let mutation of mutationsListCallBack) {
     if (mutation.type === "childList" || mutation.type === "attributes") {
-      validateLinks();
+      console.log("now updating");
+      // validateLinks();
     }
   }
 }
 
 const config = { childList: true, subtree: true, attributes: true };
-const observer = new MutationObserver(handleDOMMutations);
+const processChange = debounce(handleDOMMutations, 10000);
+const observer = new MutationObserver(processChange);
 
 observer.observe(document.body, config);
 
@@ -76,3 +72,14 @@ observer.observe(document.body, config);
 // gdy cokolwiek sie zmieni i do tej funkcji automatycznie idzie mutationList ktore zwraca ten MutationObserver
 
 // returnuje ten observer ta mutationList i automatycznie przekazuje ja do callback funkcji
+
+function debounce(callBack, delay = 1000) {
+  let timeout;
+
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      callBack(...args);
+    }, delay);
+  };
+}
