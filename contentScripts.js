@@ -5,43 +5,83 @@ let colorUnSafe;
 
 function validateLinks(colorSafe = "green", colorUnSafe = "red") {
   const links = document.querySelectorAll("a");
-  links.forEach((e) => {
-    let linkHref = e.getAttribute("href");
+  const linkArr = [...links];
 
-    if (linkHref === "#") {
-      e.style.color = colorSafe;
-      return;
-    }
-
-    const requestData = {
-      client: {
-        clientId: "ID",
-        clientVersion: "1.0.0",
-      },
-      threatInfo: {
-        threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
-        platformTypes: ["WINDOWS"],
-        threatEntryTypes: ["URL"],
-        threatEntries: [{ url: linkHref }],
-      },
+  const entries = linkArr.map((link) => {
+    return {
+      url: link.href,
     };
-
-    fetch(apiUrl, {
-      method: "POST",
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.matches && data.matches.length > 0) {
-          e.style.color = colorUnSafe;
-        } else {
-          e.style.color = colorSafe;
-        }
-      })
-      .catch((error) => {
-        console.error("Error occured:", error);
-      });
   });
+
+  const requestData = {
+    client: {
+      clientId: "ID",
+      clientVersion: "1.0.0",
+    },
+    threatInfo: {
+      threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
+      platformTypes: ["WINDOWS"],
+      threatEntryTypes: ["URL"],
+      threatEntries: entries,
+    },
+  };
+
+  fetch(apiUrl, {
+    method: "POST",
+    body: JSON.stringify(requestData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      data.matches.forEach((match) => {
+        console.log(match.threat.url);
+      });
+      // if (data.matches && data.matches.length > 0) {
+      //   e.style.color = colorUnSafe;
+      // } else {
+      //   e.style.color = colorSafe;
+      // }
+    })
+    .catch((error) => {
+      console.error("Error occured:", error);
+    });
+
+  // links.forEach((e) => {
+  //   let linkHref = e.getAttribute("href");
+
+  //   if (linkHref === "#") {
+  //     e.style.color = colorSafe;
+  //     return;
+  //   }
+
+  // const requestData = {
+  //   client: {
+  //     clientId: "ID",
+  //     clientVersion: "1.0.0",
+  //   },
+  //   threatInfo: {
+  //     threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
+  //     platformTypes: ["WINDOWS"],
+  //     threatEntryTypes: ["URL"],
+  //     threatEntries: [{ url: linkHref }],
+  //   },
+  // };
+
+  // fetch(apiUrl, {
+  //   method: "POST",
+  //   body: JSON.stringify(requestData),
+  // })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     if (data.matches && data.matches.length > 0) {
+  //       e.style.color = colorUnSafe;
+  //     } else {
+  //       e.style.color = colorSafe;
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error occured:", error);
+  //   });
+  // });
 }
 validateLinks();
 
