@@ -1,10 +1,13 @@
 const apiKey = "AIzaSyC4_ToUySpg0UxJ0gzkNm6pFpHKBjAz2OE";
 const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
-let colorSafe;
-let colorUnSafe;
+let colorSafe = "green";
+let colorUnSafe = "red";
+let links;
 
 function validateLinks() {
   const links = [...document.querySelectorAll("[href]")];
+  const malwareLinks = [];
+  const safeLinks = []; //oness to return
 
   const entries = links.map((link) => {
     return {
@@ -43,9 +46,11 @@ function validateLinks() {
       links.forEach((link) => {
         // is it better to serach through all links? or just to do it with querySelector method? idk
         if (uniqeAffectedLinks.includes(link.href)) {
-          link.style.color = "red";
+          link.style.color = colorUnSafe;
+          malwareLinks.push(link);
         } else {
-          link.style.color = "green";
+          link.style.color = colorSafe;
+          safeLinks.push(link);
         }
       });
       Observer.observe(document.body, config);
@@ -54,6 +59,11 @@ function validateLinks() {
     .catch((error) => {
       console.error("Error occured:", error);
     });
+
+  return {
+    malware: malwareLinks,
+    safe: safeLinks,
+  };
 }
 //FIRST DOM UPDATE, SO THE FIRST TIME WHEN VALIDATELINKS() WILL BE CALLED
 //expilicitlyu change DOM just to call .observe on our Observer Instance, so the first changes on links will apply after (1+5)s on our page
@@ -67,14 +77,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   request.input === "input_unsafe"
     ? (colorUnSafe = request.message)
     : (colorSafe = request.message);
+
+  Observer.disconnect();
+
+  links.malware.forEach((link) => {
+    link.style.color = colorUnSafe;
+  });
+  links.safe.forEach((link) => {
+    link.style.color = colorSafe;
+  });
+
+  Observer.observe(document.body, config);
 });
 
 //every DOM update handling
 function handleDOMMutations(mutationsListCallBack, observer) {
   for (let mutation of mutationsListCallBack) {
     if (mutation.type === "childList" || mutation.type === "attributes") {
-      validateLinks();
-      console.log("zmiana DOMU");
+      links = validateLinks();
+      console.log("DOM has changed!");
     }
   }
 }
