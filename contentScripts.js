@@ -3,11 +3,10 @@ const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${
 let colorSafe;
 let colorUnSafe;
 
-function validateLinks(colorSafe = "green", colorUnSafe = "red") {
-  const links = document.querySelectorAll("a");
-  const linkArr = [...links];
+function validateLinks() {
+  const links = [...document.querySelectorAll("[href]")];
 
-  const entries = linkArr.map((link) => {
+  const entries = links.map((link) => {
     return {
       url: link.href,
     };
@@ -32,57 +31,27 @@ function validateLinks(colorSafe = "green", colorUnSafe = "red") {
   })
     .then((response) => response.json())
     .then((data) => {
+      const affectedLinks = [];
+
       data.matches.forEach((match) => {
-        console.log(match.threat.url);
+        affectedLinks.push(match.threat.url);
       });
-      // if (data.matches && data.matches.length > 0) {
-      //   e.style.color = colorUnSafe;
-      // } else {
-      //   e.style.color = colorSafe;
-      // }
+      const uniqeAffectedLinks = [...new Set(affectedLinks)];
+
+      links.forEach((link) => {
+        if (uniqeAffectedLinks.includes(link.href)) {
+          link.style.color = "red";
+        } else {
+          link.style.color = "green";
+        }
+      });
+      // is it better to serach through all links? or just to do it with querySelector method? idk
     })
     .catch((error) => {
       console.error("Error occured:", error);
     });
-
-  // links.forEach((e) => {
-  //   let linkHref = e.getAttribute("href");
-
-  //   if (linkHref === "#") {
-  //     e.style.color = colorSafe;
-  //     return;
-  //   }
-
-  // const requestData = {
-  //   client: {
-  //     clientId: "ID",
-  //     clientVersion: "1.0.0",
-  //   },
-  //   threatInfo: {
-  //     threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
-  //     platformTypes: ["WINDOWS"],
-  //     threatEntryTypes: ["URL"],
-  //     threatEntries: [{ url: linkHref }],
-  //   },
-  // };
-
-  // fetch(apiUrl, {
-  //   method: "POST",
-  //   body: JSON.stringify(requestData),
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     if (data.matches && data.matches.length > 0) {
-  //       e.style.color = colorUnSafe;
-  //     } else {
-  //       e.style.color = colorSafe;
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error occured:", error);
-  //   });
-  // });
 }
+
 validateLinks();
 
 //wait for message from popup.js about color
@@ -104,7 +73,9 @@ function handleDOMMutations(mutationsListCallBack, observer) {
 
 const config = { childList: true, subtree: true, attributes: true };
 const processChange = debounce(handleDOMMutations, 10000);
-const observer = new MutationObserver(processChange);
+const observer = new MutationObserver(() => {
+  console.log("zmiana DOMU na stronie!");
+});
 
 observer.observe(document.body, config);
 
