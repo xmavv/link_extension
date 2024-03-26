@@ -38,21 +38,29 @@ function validateLinks() {
       });
       const uniqeAffectedLinks = [...new Set(affectedLinks)];
 
+      Observer.disconnect();
+      //we really do not want to check if colors on your webpage has changed so we dissconnect Observer
       links.forEach((link) => {
+        // is it better to serach through all links? or just to do it with querySelector method? idk
         if (uniqeAffectedLinks.includes(link.href)) {
           link.style.color = "red";
         } else {
           link.style.color = "green";
         }
       });
-      // is it better to serach through all links? or just to do it with querySelector method? idk
+      Observer.observe(document.body, config);
+      //and then we call him again to work, like nothing happend
     })
     .catch((error) => {
       console.error("Error occured:", error);
     });
 }
-
-validateLinks();
+//FIRST DOM UPDATE, SO THE FIRST TIME WHEN VALIDATELINKS() WILL BE CALLED
+//expilicitlyu change DOM just to call .observe on our Observer Instance, so the first changes on links will apply after (1+5)s on our page
+//also delaying things to initialize this Observer Instance and let him cook
+setTimeout(() => {
+  document.body.setAttribute("data-safeLink", "true");
+}, 1000);
 
 //wait for message from popup.js about color
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -65,19 +73,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 function handleDOMMutations(mutationsListCallBack, observer) {
   for (let mutation of mutationsListCallBack) {
     if (mutation.type === "childList" || mutation.type === "attributes") {
-      console.log("now updating");
-      // validateLinks();
+      validateLinks();
+      console.log("zmiana DOMU");
     }
   }
 }
 
 const config = { childList: true, subtree: true, attributes: true };
-const processChange = debounce(handleDOMMutations, 10000);
-const observer = new MutationObserver(() => {
-  console.log("zmiana DOMU na stronie!");
-});
+const Observer = new MutationObserver(debounce(handleDOMMutations, 5000));
+// to jest obiekt normalnie no nie wiec gdy handler w tej klasie zlapie ze jest zmiana w domie to wowczas wywola ta metode ktora podalismy w callbacku
+// pewnie jakos this.callback() czy cos takiego no bo ta funkcja pewnie zostala wczensije zainicjalizowana jakims
+//private callback
 
-observer.observe(document.body, config);
+Observer.observe(document.body, config);
 
 // czyli za kazdym razem gdy metoda observe cos wykryje, ten nasz obiekt jest zainicjalizowany z funkcja callback, wiec on wie ze wykona funkcje callback
 // gdy cokolwiek sie zmieni i do tej funkcji automatycznie idzie mutationList ktore zwraca ten MutationObserver
