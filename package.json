@@ -1,1 +1,1 @@
-{"type": "module"}
+{"type":"module","dependencies":{"webext-options-sync":"^4.2.1"}}

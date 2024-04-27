@@ -36,9 +36,11 @@ function validateLinks() {
     .then((data) => {
       const affectedLinks = [];
 
-      data.matches.forEach((match) => {
-        affectedLinks.push(match.threat.url);
-      });
+      if (data.matches) {
+        data.matches.forEach((match) => {
+          affectedLinks.push(match.threat.url);
+        });
+      }
       const uniqeAffectedLinks = [...new Set(affectedLinks)];
 
       Observer.disconnect();
@@ -74,20 +76,31 @@ setTimeout(() => {
 
 //wait for message from popup.js about color
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  request.input === "input_unsafe"
-    ? (colorUnSafe = request.message)
-    : (colorSafe = request.message);
+  colorUnSafe = request.message2;
+  colorSafe = request.message;
 
   Observer.disconnect();
 
-  links.malware.forEach((link) => {
+  console.log(colorUnSafe);
+  console.log(colorSafe);
+  links?.malware.forEach((link) => {
     link.style.color = colorUnSafe;
   });
-  links.safe.forEach((link) => {
+  links?.safe.forEach((link) => {
     link.style.color = colorSafe;
   });
 
   Observer.observe(document.body, config);
+});
+
+chrome.storage.local.get(["key"]).then((result) => {
+  console.log("Value is " + result.key);
+});
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  chrome.storage.local.get(["key"]).then((result) => {
+    console.log("Value is " + result.key);
+  });
 });
 
 //every DOM update handling
