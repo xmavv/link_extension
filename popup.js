@@ -10,13 +10,11 @@ let unsafeColor = "#ff0000";
 // to trzeba zmienic na local storage
 document.addEventListener("DOMContentLoaded", () => {
   chrome.storage.local.get(["safeColor"]).then((result) => {
-    console.log("safe is " + result.safeColor);
     safeColor = result.safeColor;
     SafeColorPicker.value = safeColor;
     safeLink.style.color = safeColor;
   });
   chrome.storage.local.get(["unsafeColor"]).then((result) => {
-    console.log("unsafe is " + result.unsafeColor);
     unsafeColor = result.unsafeColor;
     unSafeColorPicker.value = unsafeColor;
     unSafeLink.style.color = unsafeColor;
@@ -37,13 +35,9 @@ function sendMessageToContentscripts() {
 
 // btn submit settings
 btnSubmitSettings.addEventListener("click", () => {
-  chrome.storage.local.set({ safeColor }).then(() => {
-    console.log("safe is set");
-  });
+  chrome.storage.local.set({ safeColor }).then(() => {});
 
-  chrome.storage.local.set({ unsafeColor }).then(() => {
-    console.log("unsafecolor is set");
-  });
+  chrome.storage.local.set({ unsafeColor }).then(() => {});
 
   sendMessageToContentscripts();
 });

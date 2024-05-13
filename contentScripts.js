@@ -96,23 +96,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 //load colors from local storage
 chrome.storage.local.get(["safeColor"]).then((result) => {
-  console.log("safe is " + result.safeColor);
   colorSafe = result.safeColor;
 });
 chrome.storage.local.get(["unsafeColor"]).then((result) => {
-  console.log("unsafe is " + result.unsafeColor);
   colorUnSafe = result.unsafeColor;
 });
 
 //if local storage is changed by popup.js then load these colors
 chrome.storage.onChanged.addListener((changes, namespace) => {
   chrome.storage.local.get(["safeColor"]).then((result) => {
-    console.log("safe is " + result.safeColor);
     colorSafe = result.safeColor;
   });
 
   chrome.storage.local.get(["unsafeColor"]).then((result) => {
-    console.log("unsafe is " + result.unsafeColor);
     colorUnSafe = result.unsafeColor;
   });
 });
@@ -122,7 +118,6 @@ function handleDOMMutations(mutationsListCallBack, observer) {
   for (let mutation of mutationsListCallBack) {
     if (mutation.type === "childList" || mutation.type === "attributes") {
       links = validateLinks();
-      console.log("DOM has changed!");
     }
   }
 }
