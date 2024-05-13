@@ -4,53 +4,57 @@ const unSafeLink = document.querySelector(".unsafe");
 const safeLink = document.querySelector(".safe");
 const btnSubmitSettings = document.getElementById("btn");
 
-let safeColor = "green";
-let unsafeColor = "red";
+let safeColor = "#00ff00";
+let unsafeColor = "#ff0000";
 
+// to trzeba zmienic na local storage
 document.addEventListener("DOMContentLoaded", () => {
-  const colors = JSON.parse(localStorage.getItem("colors")) || {
-    unsafeColor,
-    safeColor,
-  };
-  safeLink.style.color = colors.safeColor;
-  unSafeLink.style.color = colors.unsafeColor;
-  SafeColorPicker.value = colors.safeColor;
-  unSafeColorPicker.value = colors.unsafeColor;
-
-  safeColor = colors.safeColor;
-  unsafeColor = colors.unsafeColor;
-  sendMessageToContentscripts();
+  chrome.storage.local.get(["safeColor"]).then((result) => {
+    console.log("safe is " + result.safeColor);
+    safeColor = result.safeColor;
+    SafeColorPicker.value = safeColor;
+    safeLink.style.color = safeColor;
+  });
+  chrome.storage.local.get(["unsafeColor"]).then((result) => {
+    console.log("unsafe is " + result.unsafeColor);
+    unsafeColor = result.unsafeColor;
+    unSafeColorPicker.value = unsafeColor;
+    unSafeLink.style.color = unsafeColor;
+  });
+  // sendMessageToContentscripts();
 });
-sendMessageToContentscripts();
 
 // send message
 function sendMessageToContentscripts() {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     const activeTab = tabs[0];
     chrome.tabs.sendMessage(activeTab.id, {
-      message: safeColor,
-      message2: unsafeColor,
+      safeColor,
+      unsafeColor,
     });
   });
-
-  chrome.storage.sync.set({ unsafe: unsafeColor });
-  chrome.storage.sync.set({ safe: safeColor });
 }
 
 // btn submit settings
 btnSubmitSettings.addEventListener("click", () => {
-  chrome.storage.local.set({ key: "value" }).then(() => {
-    console.log("value is set");
+  chrome.storage.local.set({ safeColor }).then(() => {
+    console.log("safe is set");
   });
+
+  chrome.storage.local.set({ unsafeColor }).then(() => {
+    console.log("unsafecolor is set");
+  });
+
+  sendMessageToContentscripts();
 });
 
 // popup manipulations
 const processChange = debounce((e, link) => {
   link.style.color = e.target.value;
-  link === "input__unsafe"
+  link.classList[0] === "unsafe"
     ? (unsafeColor = e.target.value)
     : (safeColor = e.target.value);
-  sendMessageToContentscripts(e);
+  // sendMessageToContentscripts(e);
 });
 
 // listeners
