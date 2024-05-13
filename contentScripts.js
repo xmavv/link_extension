@@ -1,7 +1,7 @@
 const apiKey = "AIzaSyC4_ToUySpg0UxJ0gzkNm6pFpHKBjAz2OE";
 const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
-let colorSafe = "green";
-let colorUnSafe = "red";
+let colorSafe = "#00ff00";
+let colorUnSafe = "#ff0000";
 let links;
 
 function validateLinks() {
@@ -76,13 +76,11 @@ setTimeout(() => {
 
 //wait for message from popup.js about color
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  colorUnSafe = request.message2;
-  colorSafe = request.message;
+  colorUnSafe = request.unsafeColor;
+  colorSafe = request.safeColor;
 
   Observer.disconnect();
 
-  console.log(colorUnSafe);
-  console.log(colorSafe);
   links?.malware.forEach((link) => {
     link.style.color = colorUnSafe;
   });
@@ -93,13 +91,24 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   Observer.observe(document.body, config);
 });
 
-chrome.storage.local.get(["key"]).then((result) => {
-  console.log("Value is " + result.key);
+chrome.storage.local.get(["safeColor"]).then((result) => {
+  console.log("safe is " + result.safeColor);
+  colorSafe = result.safeColor;
+});
+chrome.storage.local.get(["unsafeColor"]).then((result) => {
+  console.log("unsafe is " + result.unsafeColor);
+  colorUnSafe = result.unsafeColor;
 });
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
-  chrome.storage.local.get(["key"]).then((result) => {
-    console.log("Value is " + result.key);
+  chrome.storage.local.get(["safeColor"]).then((result) => {
+    console.log("safe is " + result.safeColor);
+    colorSafe = result.safeColor;
+  });
+
+  chrome.storage.local.get(["unsafeColor"]).then((result) => {
+    console.log("unsafe is " + result.unsafeColor);
+    colorUnSafe = result.unsafeColor;
   });
 });
 
