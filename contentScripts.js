@@ -31,6 +31,9 @@ function validateLinks() {
   fetch(apiUrl, {
     method: "POST",
     body: JSON.stringify(requestData),
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
     .then((response) => response.json())
     .then((data) => {
@@ -91,6 +94,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   Observer.observe(document.body, config);
 });
 
+//load colors from local storage
 chrome.storage.local.get(["safeColor"]).then((result) => {
   console.log("safe is " + result.safeColor);
   colorSafe = result.safeColor;
@@ -100,6 +104,7 @@ chrome.storage.local.get(["unsafeColor"]).then((result) => {
   colorUnSafe = result.unsafeColor;
 });
 
+//if local storage is changed by popup.js then load these colors
 chrome.storage.onChanged.addListener((changes, namespace) => {
   chrome.storage.local.get(["safeColor"]).then((result) => {
     console.log("safe is " + result.safeColor);
