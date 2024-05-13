@@ -17,10 +17,16 @@ Main subject was to develop my first chrome extension, which would be able to ca
 - HTML, CSS, JS
 - Safe browsing google api
 
-### What I  learned
+### What I learned
 
 - .json files
 - how to send HTTP request, and validate it
+
+### What may be added
+
+- add some database or data comming from api to expand google database (which isn't that big ;D) https://urlhaus.abuse.ch/
+- even better emphasis of danger link in css
+- searching not only for hrefs but other normal text that is written like "<p>" tag
 
 ## Author
 
