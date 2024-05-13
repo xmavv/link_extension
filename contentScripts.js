@@ -52,6 +52,8 @@ function validateLinks() {
         // is it better to serach through all links? or just to do it with querySelector method? idk
         if (uniqeAffectedLinks.includes(link.href)) {
           link.style.color = colorUnSafe;
+          link.style.border = `1px solid ${colorUnSafe}`;
+          link.style.backgroundColor = "black";
           malwareLinks.push(link);
         } else {
           link.style.color = colorSafe;
@@ -86,6 +88,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   links?.malware.forEach((link) => {
     link.style.color = colorUnSafe;
+    link.style.border = `1px solid ${colorUnSafe}`;
+    link.style.backgroundColor = "black";
   });
   links?.safe.forEach((link) => {
     link.style.color = colorSafe;
