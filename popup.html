@@ -12,7 +12,9 @@
       <div class="container">
         <p>
           Pick color for
-          <a role="link" aria-disabled="true" class="unsafe">NOTsafeLink</a>
+          <a role="link" aria-disabled="true" href="#" class="unsafe"
+            >NOTsafeLink</a
+          >
           <input type="color" value="#ff0000" id="input_unsafe" />
         </p>
         <p>
@@ -23,6 +25,16 @@
       </div>
     </main>
 
-    <button id="btn" class="btn">Save Your choice</button>
+    <div class="toggle-switch">
+      <div>
+        <input type="checkbox" class="toggle" name="toggle" id="toggle" />
+        <label for="toggle" aria-label="Switch extension on/off"></label>
+      </div>
+      <p class="toggle-switch__text">
+        EXTENSION IS <span id="toggle-on"></span>
+      </p>
+    </div>
+
+    <button id="btn" class="btn">Save settings</button>
   </body>
 </html>

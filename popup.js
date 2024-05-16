@@ -3,11 +3,14 @@ const SafeColorPicker = document.getElementById("input_safe");
 const unSafeLink = document.querySelector(".unsafe");
 const safeLink = document.querySelector(".safe");
 const btnSubmitSettings = document.getElementById("btn");
+const toggle = document.getElementById("toggle");
+const toggleOn = document.getElementById("toggle-on");
+let isExtensionOn;
 
 let safeColor = "#00ff00";
 let unsafeColor = "#ff0000";
 
-// to trzeba zmienic na local storage
+// while clicking our safeLink icon
 document.addEventListener("DOMContentLoaded", () => {
   chrome.storage.local.get(["safeColor"]).then((result) => {
     safeColor = result.safeColor;
@@ -19,7 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
     unSafeColorPicker.value = unsafeColor;
     unSafeLink.style.color = unsafeColor;
   });
-  // sendMessageToContentscripts();
+  chrome.storage.local.get(["isExtensionOn"]).then((result) => {
+    toggle.checked = result.isExtensionOn;
+    isExtensionOn = result.isExtensionOn;
+    isExtensionOn
+      ? (toggleOn.textContent = "ON")
+      : (toggleOn.textContent = "OFF");
+  });
 });
 
 // send message
@@ -29,17 +38,29 @@ function sendMessageToContentscripts() {
     chrome.tabs.sendMessage(activeTab.id, {
       safeColor,
       unsafeColor,
+      isExtensionOn,
     });
   });
 }
 
 // btn submit settings
-btnSubmitSettings.addEventListener("click", () => {
+const processSendMessageChange = debounce(() => {
   chrome.storage.local.set({ safeColor }).then(() => {});
 
   chrome.storage.local.set({ unsafeColor }).then(() => {});
 
+  chrome.storage.local.set({ isExtensionOn }).then(() => {});
   sendMessageToContentscripts();
+}, 3000);
+
+btnSubmitSettings.addEventListener("click", processSendMessageChange);
+
+toggle.addEventListener("click", () => {
+  isExtensionOn = toggle.checked;
+
+  isExtensionOn
+    ? (toggleOn.textContent = "ON")
+    : (toggleOn.textContent = "OFF");
 });
 
 // popup manipulations

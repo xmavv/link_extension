@@ -3,6 +3,7 @@ const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${
 let colorSafe = "#00ff00";
 let colorUnSafe = "#ff0000";
 let links;
+let isExtensionOn = true;
 
 function validateLinks() {
   const links = [...document.querySelectorAll("[href]")];
@@ -83,8 +84,12 @@ setTimeout(() => {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   colorUnSafe = request.unsafeColor;
   colorSafe = request.safeColor;
+  isExtensionOn = request.isExtensionOn;
 
   Observer.disconnect();
+
+  if (isExtensionOn) links = validateLinks();
+  console.log("walidacja");
 
   links?.malware.forEach((link) => {
     link.style.color = colorUnSafe;
@@ -105,6 +110,9 @@ chrome.storage.local.get(["safeColor"]).then((result) => {
 chrome.storage.local.get(["unsafeColor"]).then((result) => {
   colorUnSafe = result.unsafeColor;
 });
+chrome.storage.local.get(["isExtensionOn"]).then((result) => {
+  isExtensionOn = result.isExtensionOn;
+});
 
 //if local storage is changed by popup.js then load these colors
 chrome.storage.onChanged.addListener((changes, namespace) => {
@@ -115,12 +123,24 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   chrome.storage.local.get(["unsafeColor"]).then((result) => {
     colorUnSafe = result.unsafeColor;
   });
+
+  chrome.storage.local.get(["isExtensionOn"]).then((result) => {
+    isExtensionOn = result.isExtensionOn;
+  });
 });
 
 //every DOM update handling
 function handleDOMMutations(mutationsListCallBack, observer) {
   for (let mutation of mutationsListCallBack) {
-    if (mutation.type === "childList" || mutation.type === "attributes") {
+    console.log(
+      (mutation.type === "childList" || mutation.type === "attributes") &&
+        isExtensionOn
+    );
+
+    if (
+      (mutation.type === "childList" || mutation.type === "attributes") &&
+      isExtensionOn
+    ) {
       links = validateLinks();
     }
   }

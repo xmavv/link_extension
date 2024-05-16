@@ -27,6 +27,8 @@ Main subject was to develop my first chrome extension, which would be able to ca
 - add some database or data comming from api to expand google database (which isn't that big ;D) https://urlhaus.abuse.ch/
 - even better emphasis of danger link in css
 - searching not only for hrefs but other normal text that is written like "<p>" tag
+- on/off button
+- api requests may be on the background.js side
 
 ## Author
 

@@ -86,7 +86,7 @@ input {
 }
 
 .btn::before {
-  content: "saved!";
+  content: "saving in 3s";
   text-transform: lowercase;
   position: absolute;
   border-radius: 2rem;
@@ -105,4 +105,62 @@ input {
 
   visibility: hidden;
   opacity: 0;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.toggle-switch div {
+  margin-right: 1rem;
+}
+
+.toggle {
+  visibility: hidden;
+  display: none;
+}
+
+.toggle ~ label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  color: #fff;
+}
+
+.toggle ~ label::before {
+  content: "";
+  height: 2.5rem;
+  width: 5rem;
+  border-radius: 2rem;
+  background-color: red;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.toggle ~ label::after {
+  content: "";
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: #fff;
+  left: 0.5rem;
+  transition: transform 0.1s ease-in-out;
+}
+
+.toggle:checked ~ label::after {
+  transform: translateX(165%);
+}
+
+.toggle:checked ~ label::before {
+  background-color: green;
+}
+
+.toggle-switch__text {
+  justify-self: flex-end;
+  font-size: 1.5rem;
+  color: #fff;
 }
