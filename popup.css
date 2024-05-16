@@ -1,41 +1,166 @@
 :root {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #333;
 }
 
 main {
-    color: white;
-    font-size: 1.8rem;
-    width: 250px;
-    height: 100px;
-    background-color: white;
-    padding: 2rem 0;
-    text-align: center;
-    position: relative;
-    background-color: #333;
+  color: white;
+  font-size: 1.8rem;
+  width: 200px;
+  height: 250px;
+  padding: 2rem 0;
+  text-align: center;
+  position: relative;
 }
 
-main div {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.unsafe,
+.safe {
+  cursor: pointer;
+  font-size: 2.5rem;
 }
 
 .unsafe {
-    color: red;
+  color: red;
+}
+.safe {
+  color: green;
+}
+
+p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 input {
-    width: 25px;
-    height: 25px;
-    margin: 0 20px;
-    background-color: black;
-    border: 1px solid white padding-box;
-    border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: black;
+  border: 1px solid white padding-box;
+  outline: none;
+  border-radius: 5px;
+}
+
+.btn {
+  position: relative;
+  outline: none;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #fff;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #111;
+  color: #fff;
+}
+
+.btn:focus::before {
+  visibility: visible;
+  opacity: 1;
+  color: #111;
+}
+
+.btn::before {
+  content: "saving in 3s";
+  text-transform: lowercase;
+  position: absolute;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 2rem;
+  background-color: #fff;
+  color: #111;
+  cursor: auto;
+  transition: all 0.5s ease;
+
+  visibility: hidden;
+  opacity: 0;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.toggle-switch div {
+  margin-right: 1rem;
+}
+
+.toggle {
+  visibility: hidden;
+  display: none;
+}
+
+.toggle ~ label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  color: #fff;
+}
+
+.toggle ~ label::before {
+  content: "";
+  height: 2.5rem;
+  width: 5rem;
+  border-radius: 2rem;
+  background-color: red;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.toggle ~ label::after {
+  content: "";
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: #fff;
+  left: 0.5rem;
+  transition: transform 0.1s ease-in-out;
+}
+
+.toggle:checked ~ label::after {
+  transform: translateX(165%);
+}
+
+.toggle:checked ~ label::before {
+  background-color: green;
+}
+
+.toggle-switch__text {
+  justify-self: flex-end;
+  font-size: 1.5rem;
+  color: #fff;
 }

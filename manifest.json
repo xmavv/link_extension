@@ -1,26 +1,26 @@
 {
-    "name": "safeLink",
-    "version": "1.0",
-    "manifest_version": 3,
-    "description": "Extension that checks, if link is trustworthy or not",
-    "permissions": ["storage", "tabs", "http://*/*", "offscreen"],
-    "action": {
-        "default_icon": {
-            "16": "icon.png",
-            "24": "icon.png",
-            "32": "icon.png"
-        },
-        "default_title": "safeLink",
-        "default_popup": "popup.html"
+  "name": "safeLink",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Extension that checks, if link is trustworthy or not",
+  "permissions": ["storage", "tabs", "offscreen"],
+  "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "24": "icon.png",
+      "32": "icon.png"
     },
-    "background": {
-        "service_worker": "background.js"
-    },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["contentScripts.js"],
-            "css":["contentStyles.css"]
-        }
-    ]
+    "default_title": "safeLink",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScripts.js"],
+      "css": ["contentStyles.css"]
+    }
+  ]
 }
