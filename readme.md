@@ -33,5 +33,4 @@ Main subject was to develop my first chrome extension, which would be able to ca
 ## Author
 
 - my github profile - [xmavv](https://github.com/xmavv)
-- my frontend mentor profile - [@xmavv](https://www.frontendmentor.io/profile/xmavv)
 - my behance profile - [mav](https://www.behance.net/mavrgb)
