@@ -89,7 +89,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   Observer.disconnect();
 
   if (isExtensionOn) links = validateLinks();
-  console.log("walidacja");
+  // console.log("validation");
 
   links?.malware.forEach((link) => {
     link.style.color = colorUnSafe;
@@ -132,10 +132,10 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 //every DOM update handling
 function handleDOMMutations(mutationsListCallBack, observer) {
   for (let mutation of mutationsListCallBack) {
-    console.log(
-      (mutation.type === "childList" || mutation.type === "attributes") &&
-        isExtensionOn
-    );
+    // console.log(
+    //   (mutation.type === "childList" || mutation.type === "attributes") &&
+    //     isExtensionOn
+    // );
 
     if (
       (mutation.type === "childList" || mutation.type === "attributes") &&
