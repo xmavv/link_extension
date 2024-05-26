@@ -55,9 +55,13 @@ input {
   width: 30px;
   height: 30px;
   background-color: black;
-  border: 1px solid white padding-box;
+  border: 1px solid white;
   outline: none;
   border-radius: 5px;
+}
+
+.submit-container {
+  position: relative;
 }
 
 .btn {
@@ -79,14 +83,8 @@ input {
   color: #fff;
 }
 
-.btn:focus::before {
-  visibility: visible;
-  opacity: 1;
-  color: #111;
-}
-
-.btn::before {
-  content: "saving in 3s";
+.save {
+  font-size: 1.2rem;
   text-transform: lowercase;
   position: absolute;
   border-radius: 2rem;
@@ -105,6 +103,11 @@ input {
 
   visibility: hidden;
   opacity: 0;
+}
+
+.btn:focus + .save {
+  visibility: visible;
+  opacity: 1;
 }
 
 .toggle-switch {

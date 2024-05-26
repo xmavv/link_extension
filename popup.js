@@ -5,6 +5,7 @@ const safeLink = document.querySelector(".safe");
 const btnSubmitSettings = document.getElementById("btn");
 const toggle = document.getElementById("toggle");
 const toggleOn = document.getElementById("toggle-on");
+const saveMessage = document.querySelector('.save');
 let isExtensionOn;
 
 let safeColor = "#00ff00";
@@ -53,7 +54,29 @@ const processSendMessageChange = debounce(() => {
   sendMessageToContentscripts();
 }, 3000);
 
-btnSubmitSettings.addEventListener("click", processSendMessageChange);
+  let interval;
+btnSubmitSettings.addEventListener("click", () => {
+  saveMessage.textContent = `saving in 3...`;
+  clearInterval(interval);
+  saveMessage.style.visibility = 'visible';
+  saveMessage.style.opacity = 1;
+
+
+  let n=2;
+
+  interval = setInterval(() => {
+    saveMessage.textContent = `saving in ${n}...`;
+
+    if (n-- === 0) {
+      clearInterval(interval);
+      saveMessage.style.visibility = 'hidden';
+      saveMessage.style.opacity = '0';
+    }
+
+  }, 1000)
+
+  processSendMessageChange();
+});
 
 toggle.addEventListener("click", () => {
   isExtensionOn = toggle.checked;
