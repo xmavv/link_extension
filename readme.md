@@ -17,7 +17,8 @@ main subject was to develop my first chrome extension, which would be able to ca
 ### Built with
 
 - HTML, CSS, JS
-- Safe browsing google api
+- safe browsing google api
+- chrome local storage (extension storage) for colors and on/off button
 
 ### What I learned
 
