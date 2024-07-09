@@ -19,15 +19,13 @@ main subject was to develop my first chrome extension, which would be able to ca
 
 ### What I learned
 
-- .json files
-- how to send HTTP request, and validate it
+- sending HTTP POST request, and validating it
 
 ### What may be added
 
 - add some database or data comming from api to expand google database (which isn't that big ;D) https://urlhaus.abuse.ch/
 - even better emphasis of danger link in css
-- searching not only for hrefs but other normal text that is written like "<p>" tag
-- on/off button
+- searching not only for hrefs but other normal text that is written by someone
 - api requests may be on the background.js side
 
 ## How to use
