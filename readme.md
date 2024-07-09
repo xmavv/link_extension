@@ -4,6 +4,8 @@
 
 thanks for checking out my first chrome extension!
 
+https://github.com/xmavv/safeLink/assets/129995423/3e17bc70-d999-42a4-8f7a-af8173a534b3
+
 ## Overview
 
 ### The main subject
