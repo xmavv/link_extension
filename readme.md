@@ -21,6 +21,26 @@ main subject was to develop my first chrome extension, which would be able to ca
 
 - sending HTTP POST request, and validating it
 
+- observer object in web API, app is reacting to DOM changes so when extension is changing colors of links (which is DOM manipulation), we are just disconnecting observer and then after colors are set, we connect observer agin
+
+```
+Observer.disconnect();
+      //we really do not want to check if colors on your webpage has changed so we dissconnect Observer
+      links.forEach((link) => {
+        if (uniqeAffectedLinks.includes(link.href)) {
+          link.style.color = colorUnSafe;
+          link.style.border = `1px solid ${colorUnSafe}`;
+          link.style.backgroundColor = "black";
+          malwareLinks.push(link);
+        } else {
+          link.style.color = colorSafe;
+          safeLinks.push(link);
+        }
+      });
+      Observer.observe(document.body, config);
+      //and then we call him again to work, like nothing happend
+```
+
 ### What may be added
 
 - add some database or data comming from api to expand google database (which isn't that big ;D) https://urlhaus.abuse.ch/
