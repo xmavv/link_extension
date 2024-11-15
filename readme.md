@@ -6,7 +6,7 @@
 
 thanks for checking out my first chrome extension!
 
-https://github.com/xmavv/safeLink/assets/129995423/3e17bc70-d999-42a4-8f7a-af8173a534b3
+[https://github.com/xmavv/safeLink/assets/129995423/3e17bc70-d999-42a4-8f7a-af8173a534b3](https://github.com/user-attachments/assets/147b17a6-5b27-4963-886d-ecedac22574d)
 
 ## Overview
 
