@@ -3,7 +3,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "description": "Extension that checks, if link is trustworthy or not",
-  "permissions": ["storage", "tabs"],
+  "permissions": ["storage"],
   "action": {
     "default_icon": {
       "16": "icon.png",
